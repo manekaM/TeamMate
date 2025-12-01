@@ -11,15 +11,15 @@ public class Main {
 
         List<Participant> participants = FileHandler.readParticipants("data/participants_sample.csv");
 
-        System.out.print("Enter desired team size (e.g., 5): ");
+        System.out.print("Enter desired team size (How many members in a team): ");
         int teamSize = scanner.nextInt();
 
-        if (teamSize < 3 || teamSize > 10) {
-            System.out.println("Team size must be 3–10. Using 5.");
+        if (teamSize < 5) {
+            System.out.println("Team size should be greater than 5. Please enter a valid team size");
             teamSize = 5;
         }
 
-        System.out.println("\nForming teams using multiple threads... Please wait.\n");
+        System.out.println("\nForming teams.Please wait...\n");
 
         long start = System.currentTimeMillis();
         List<Team> teams = TeamBuilder.buildTeams(participants, teamSize);
