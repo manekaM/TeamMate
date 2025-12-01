@@ -35,6 +35,24 @@ public class FileHandler {
         return participants;
     }
 
+    public static void appendParticipant(String filename, Participant p) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filename, true))) {
+            pw.printf("%s,%s,%s,%s,%d,%s,%d,%s%n",
+                    p.getId(),
+                    p.getName(),
+                    p.getEmail(),
+                    p.getPreferredGame(),
+                    p.getSkillLevel(),
+                    p.getPreferredRole(),
+                    p.getPersonalityScore(),
+                    p.getPersonalityType()
+            );
+            System.out.println("New member saved to CSV file.");
+        } catch (IOException e) {
+            System.err.println("Could not save new member: " + e.getMessage());
+        }
+    }
+
     public static void writeTeams(List<Team> teams, String filename) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {
             // Header

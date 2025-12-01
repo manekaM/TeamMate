@@ -25,6 +25,7 @@ public class Participant {
     // Getters
     public String getId() { return id; }
     public String getName() { return name; }
+    public String getEmail() { return email; }
     public String getPreferredGame() { return preferredGame; }
     public int getSkillLevel() { return skillLevel; }
     public Role getPreferredRole() { return preferredRole; }
