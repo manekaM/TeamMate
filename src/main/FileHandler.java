@@ -37,18 +37,30 @@ public class FileHandler {
 
     public static void writeTeams(List<Team> teams, String filename) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {
+            // Header
             pw.println("TeamNumber,ParticipantID,Name,Game,Role,Personality,Skill");
+
+            int teamCounter = 1;
             for (Team team : teams) {
+                String teamName = "Team " + teamCounter;  // This is what the lecturer wants
+
                 for (Participant p : team.getMembers()) {
-                    pw.printf("%d,%s,%s,%s,%s,%s,%d%n",
-                            team.getMembers().indexOf(p) + 1 + (team.getMembers().size() * (teams.indexOf(team))),
-                            p.getId(), p.getName(), p.getPreferredGame(),
-                            p.getPreferredRole(), p.getPersonalityType(), p.getSkillLevel());
+                    pw.printf("%s,%s,%s,%s,%s,%s,%d%n",
+                            teamName,                     // ← Team 1, Team 1, Team 1...
+                            p.getId(),
+                            p.getName(),
+                            p.getPreferredGame(),
+                            p.getPreferredRole(),
+                            p.getPersonalityType(),
+                            p.getSkillLevel()
+                    );
                 }
+                teamCounter++;
             }
-            System.out.println("Teams saved to " + filename);
+            System.out.println("Teams successfully saved to " + filename);
         } catch (IOException e) {
             System.err.println("Could not write file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
