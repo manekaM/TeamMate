@@ -11,6 +11,7 @@ public class Logger {
     private final PrintWriter writer;
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
+    //Constructor
     private Logger() {
         try {
             writer = new PrintWriter(new FileWriter("teammate.log", true));
@@ -28,6 +29,7 @@ public class Logger {
         return instance;
     }
 
+    //Saves information with timestamp
     public synchronized void info(String message) {
         log("INFO ", message);
     }
@@ -46,6 +48,7 @@ public class Logger {
         }
     }
 
+    //Closes the logger
     public synchronized void close() {
         if (writer != null) {
             info("Logger shutting down");

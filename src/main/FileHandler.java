@@ -7,6 +7,8 @@ import java.util.List;
 public class FileHandler {
     private static final Logger logger = Logger.getInstance();
 
+    //Reading participants from CSV
+
     public static List<Participant> readParticipants(String filename) throws FileProcessingException {
         List<Participant> participants = new ArrayList<>();
         File file = new File(filename);
@@ -58,6 +60,8 @@ public class FileHandler {
         return participants;
     }
 
+    //Appending a new member
+
     public static void appendParticipant(String filename, Participant p) throws FileProcessingException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename, true))) {
             pw.printf("%s,%s,%s,%s,%d,%s,%d,%s%n",
@@ -71,6 +75,8 @@ public class FileHandler {
             throw new FileProcessingException("Could not save new member to file", e);
         }
     }
+
+    //Writes the member details to the csv file
 
     public static void writeTeams(List<Team> teams, String filename) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {

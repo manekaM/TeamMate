@@ -7,6 +7,7 @@ public enum Role {
     SUPPORTER("Supporter"),
     COORDINATOR("Coordinator");
 
+    //Constructor
     private final String name;
     Role(String name) { this.name = name; }
 

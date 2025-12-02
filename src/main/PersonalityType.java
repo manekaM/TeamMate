@@ -7,10 +7,12 @@ public enum PersonalityType {
 
     private final String name;
 
+    //Constructor
     PersonalityType(String name, int min, int max) {
         this.name = name;
     }
 
+    //Gets the PersonalityType from the given score
     public static PersonalityType fromScore(int score) {
         if (score >= 90) return LEADER;
         if (score >= 70) return BALANCED;

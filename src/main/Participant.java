@@ -10,6 +10,7 @@ public class Participant {
     private final int personalityScore;
     private final PersonalityType personalityType;
 
+   //Constructor
     public Participant(String id, String name, String email, String preferredGame,
                        int skillLevel, String roleStr, int personalityScore) {
         this.id = id;

@@ -10,6 +10,7 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Logger logger = Logger.getInstance();
 
+    //Main Method
     public static void main(String[] args) {
         logger.info("=== WELCOME TO TEAMMATE ===");
 
@@ -52,6 +53,7 @@ public class Main {
         }
     }
 
+    //Displays the Main Menu Options
     private static void displayMenu() {
         System.out.println("\n MAIN MENU ");
         System.out.println("1. Add new member (Take Survey)");
@@ -59,6 +61,7 @@ public class Main {
         System.out.println("3. Exit");
     }
 
+    //Form teams by getting the team size
     private static void formTeamsSafely() {
         if (participants.isEmpty()) {
             System.out.println("No participants available. Please add members first.");
@@ -98,6 +101,8 @@ public class Main {
         }
     }
 
+
+    //Adding a new member by getting details through a survey
     private static void addNewMemberWithSurvey() {
         System.out.println("\n=== NEW MEMBER REGISTRATION SURVEY ===");
 
@@ -139,6 +144,7 @@ public class Main {
         }
     }
 
+    //Asking the user to enter tge preferred game from the given list
     private static String chooseGame() {
         System.out.println("\nChoose your preferred game:");
         String[] games = {"FIFA", "Valorant", "CS:GO", "DOTA 2", "Basketball", "Chess", "Badminton"};
@@ -149,6 +155,7 @@ public class Main {
         return games[choice - 1];
     }
 
+    //Asking the user to enter tge preferred role from the given list
     private static String chooseRole() {
         System.out.println("\nChoose preferred role:");
         String[] roles = {"Strategist", "Attacker", "Defender", "Supporter", "Coordinator"};
@@ -159,6 +166,7 @@ public class Main {
         return roles[choice - 1];
     }
 
+    //Asking the Personality Questions
     private static int conductPersonalitySurvey() {
         System.out.println("\nPersonality Survey (1 = Strongly Disagree → 5 = Strongly Agree)");
         String[] questions = {
@@ -177,7 +185,7 @@ public class Main {
         return total * 4; // Scale to 0-100 range
     }
 
-    // SAFE INPUT METHODS
+    // Safe Input Methods to prevent invalid inputs from user
     private static int safeReadInt(String prompt) {
         while (true) {
             System.out.print(prompt);

@@ -7,10 +7,12 @@ public class Team {
     private int teamNumber;
     private final List<Participant> members = new ArrayList<>();
 
+    //Constructor
     public Team(int teamNumber) {
         this.teamNumber = teamNumber;
     }
 
+    //Sets team number
     public void setTeamNumber(int teamNumber) {
         this.teamNumber = teamNumber;
     }
@@ -19,18 +21,22 @@ public class Team {
         return teamNumber;
     }
 
+    //Adding a member to the team
     public void addMember(Participant p) {
         members.add(p);
     }
 
+    //Team members list
     public List<Participant> getMembers() {
         return members;
     }
 
+    //Size of the team
     public int getSize() {
         return members.size();
     }
 
+    //Average skill level
     public double getAverageSkill() {
         if (members.isEmpty()) return 0;
         return members.stream().mapToInt(Participant::getSkillLevel).average().orElse(0);

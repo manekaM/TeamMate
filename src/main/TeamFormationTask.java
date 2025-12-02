@@ -5,11 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+//Forming teams by parallel threads
 public class TeamFormationTask implements Runnable {
     private final List<Participant> participants;
     private final int teamSize;
     private final List<List<Team>> results;
 
+    //Constructor
     public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> results) {
         this.participants = new ArrayList<>(participants);
         this.teamSize = teamSize;
@@ -24,6 +26,7 @@ public class TeamFormationTask implements Runnable {
         }
     }
 
+    //Forms balanced teams
     private List<Team> formBalancedTeams() {
         Collections.shuffle(participants, new Random());
         List<Participant> pool = new ArrayList<>(participants);
