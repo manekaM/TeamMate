@@ -78,11 +78,11 @@ public class Main {
             long time = System.currentTimeMillis() - start;
 
             int totalUsed = teams.stream().mapToInt(Team::getSize).sum();
-            System.out.println("\nTEAM FORMATION COMPLETE!");
-            System.out.printf("Created %,d team(s) using %,d participants ",
+            System.out.println("\nTEAM FORMATION COMPLETE! \n");
+            System.out.printf("Created %,d teams using %,d participants \n",
                     teams.size(), totalUsed, time);
 
-            logger.info(String.format("Teams formed: %d teams, %d participants", teams.size(), totalUsed, time));
+            logger.info(String.format("Teams formed: %d teams, %d participants \n" , teams.size(), totalUsed, time));
 
             for (Team team : teams) {
                 System.out.println(team);
@@ -191,7 +191,7 @@ public class Main {
         while (true) {
             int value = safeReadInt(prompt);
             if (value >= min && value <= max) return value;
-            System.out.printf("Please enter a number between %d and %d.\n", min, max);
+            System.out.printf("Please enter a number between %d and %d.", min, max);
         }
     }
 

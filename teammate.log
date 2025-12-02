@@ -27,3 +27,58 @@
 [2025-12-02 17:51:07.348] INFO  Statistics shown: 100 members | Leaders:34 Balanced:33 Thinkers:33 AvgSkill:5.56
 [2025-12-02 17:51:18.159] INFO  User selected: Exit application
 [2025-12-02 17:51:18.159] INFO  Logger shutting down
+[2025-12-02 17:56:39.963] INFO  Logger initialized
+[2025-12-02 17:56:39.963] INFO  === TeamMate Application STARTED ===
+[2025-12-02 17:56:39.988] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 17:56:45.025] INFO  User selected: Form balanced teams
+[2025-12-02 17:56:50.313] INFO  Starting team formation: 100 participants, target team size = 5
+[2025-12-02 17:56:50.375] INFO  Team formation completed: 20 teams created
+[2025-12-02 17:56:50.378] INFO  Teams formed: 20 teams, 100 participants
+[2025-12-02 17:56:50.386] INFO  Exported 20 teams to formed_teams.csv
+[2025-12-02 17:58:53.426] INFO  Logger initialized
+[2025-12-02 17:58:53.426] INFO  === TeamMate Application STARTED ===
+[2025-12-02 17:58:53.447] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 17:58:56.827] INFO  User selected: Form balanced teams
+[2025-12-02 17:59:02.942] INFO  Starting team formation: 100 participants, target team size = 5
+[2025-12-02 17:59:03.001] INFO  Team formation completed: 20 teams created
+[2025-12-02 17:59:03.002] INFO  Teams formed: 20 teams, 100 participants 
+
+[2025-12-02 17:59:03.015] INFO  Exported 20 teams to formed_teams.csv
+[2025-12-02 18:00:30.728] INFO  User selected: Exit application
+[2025-12-02 18:00:30.728] INFO  Logger shutting down
+[2025-12-02 18:01:00.660] INFO  Logger initialized
+[2025-12-02 18:01:00.660] INFO  === TeamMate Application STARTED ===
+[2025-12-02 18:01:00.680] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 18:01:03.055] INFO  User selected: Form balanced teams
+[2025-12-02 18:01:05.424] INFO  Starting team formation: 100 participants, target team size = 5
+[2025-12-02 18:01:05.461] INFO  Team formation completed: 20 teams created
+[2025-12-02 18:01:05.461] INFO  Teams formed: 20 teams, 100 participants 
+
+[2025-12-02 18:01:05.477] INFO  Exported 20 teams to formed_teams.csv
+[2025-12-02 18:01:53.288] INFO  Logger initialized
+[2025-12-02 18:01:53.288] INFO  === TeamMate Application STARTED ===
+[2025-12-02 18:01:53.306] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 18:01:55.883] INFO  User selected: Form balanced teams
+[2025-12-02 18:01:59.207] INFO  Starting team formation: 100 participants, target team size = 20
+[2025-12-02 18:01:59.244] INFO  Team formation completed: 5 teams created
+[2025-12-02 18:01:59.247] ERROR Team formation failed
+[2025-12-02 18:02:20.755] INFO  Logger initialized
+[2025-12-02 18:02:20.756] INFO  === TeamMate Application STARTED ===
+[2025-12-02 18:02:20.773] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 18:02:23.754] INFO  User selected: Form balanced teams
+[2025-12-02 18:02:24.947] INFO  Starting team formation: 100 participants, target team size = 20
+[2025-12-02 18:02:25.004] INFO  Team formation completed: 5 teams created
+[2025-12-02 18:02:25.005] INFO  Teams formed: 5 teams, 100 participants 
+
+[2025-12-02 18:02:25.014] INFO  Exported 5 teams to formed_teams.csv
+[2025-12-02 18:03:07.825] INFO  User selected: Exit application
+[2025-12-02 18:03:07.826] INFO  Logger shutting down
+[2025-12-02 18:03:11.307] INFO  Logger initialized
+[2025-12-02 18:03:11.308] INFO  === TeamMate Application STARTED ===
+[2025-12-02 18:03:11.326] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 18:03:15.592] INFO  User selected: Form balanced teams
+[2025-12-02 18:03:22.142] INFO  Starting team formation: 100 participants, target team size = 25
+[2025-12-02 18:03:22.183] INFO  Team formation completed: 4 teams created
+[2025-12-02 18:03:22.184] INFO  Teams formed: 4 teams, 100 participants 
+
+[2025-12-02 18:03:22.194] INFO  Exported 4 teams to formed_teams.csv
