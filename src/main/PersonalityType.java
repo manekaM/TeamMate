@@ -6,13 +6,9 @@ public enum PersonalityType {
     THINKER("Thinker", 50, 69);
 
     private final String name;
-    private final int min;
-    private final int max;
 
     PersonalityType(String name, int min, int max) {
         this.name = name;
-        this.min = min;
-        this.max = max;
     }
 
     public static PersonalityType fromScore(int score) {

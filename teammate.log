@@ -82,3 +82,7 @@
 [2025-12-02 18:03:22.184] INFO  Teams formed: 4 teams, 100 participants 
 
 [2025-12-02 18:03:22.194] INFO  Exported 4 teams to formed_teams.csv
+[2025-12-02 18:59:22.504] INFO  Logger initialized
+[2025-12-02 18:59:22.504] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-02 18:59:22.511] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 18:59:34.100] INFO  User selected: Add new club member

@@ -62,17 +62,15 @@ public class TeamFormationTask implements Runnable {
                         best = p;
                     }
                 }
-                if (best != null) {
-                    team.addMember(best);
-                    pool.remove(best);
-                }
+                team.addMember(best);
+                pool.remove(best);
             }
             teams.add(team);
         }
 
         // Add any stragglers to last team
-        if (!pool.isEmpty() && !teams.isEmpty()) {
-            teams.get(teams.size() - 1).getMembers().addAll(pool);
+        if (!pool.isEmpty()) {
+            teams.getLast().getMembers().addAll(pool);
         }
 
         return teams;

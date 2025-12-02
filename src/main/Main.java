@@ -65,7 +65,7 @@ public class Main {
             return;
         }
 
-        int teamSize = safeReadPositiveInt("\nEnter desired team size: ");
+        int teamSize = safeReadPositiveInt();
 
         if (teamSize > participants.size()) {
             System.out.printf("Note: Team size (%d) > total participants (%d). Creating 1 team with everyone.%n",
@@ -80,9 +80,9 @@ public class Main {
             int totalUsed = teams.stream().mapToInt(Team::getSize).sum();
             System.out.println("\nTEAM FORMATION COMPLETE! \n");
             System.out.printf("Created %,d teams using %,d participants \n",
-                    teams.size(), totalUsed, time);
+                    teams.size(), totalUsed);
 
-            logger.info(String.format("Teams formed: %d teams, %d participants \n" , teams.size(), totalUsed, time));
+            logger.info(String.format("Teams formed: %d teams, %d participants \n" , teams.size(), totalUsed));
 
             for (Team team : teams) {
                 System.out.println(team);
@@ -123,7 +123,7 @@ public class Main {
 
         int personalityScore = conductPersonalitySurvey();
 
-        int skill = safeReadIntBounded("\nEnter your skill level (1=Beginner, 10=Pro): ", 1, 10);
+        int skill = safeReadIntBounded("\nEnter your skill level (1=Beginner, 10=Pro): ", 10);
 
         String id = String.format("P%03d", participants.size() + 1);
 
@@ -145,7 +145,7 @@ public class Main {
         for (int i = 0; i < games.length; i++) {
             System.out.println((i + 1) + ". " + games[i]);
         }
-        int choice = safeReadIntBounded("Select (1–7): ", 1, 7);
+        int choice = safeReadIntBounded("Select (1–7): ", 7);
         return games[choice - 1];
     }
 
@@ -155,7 +155,7 @@ public class Main {
         for (int i = 0; i < roles.length; i++) {
             System.out.println((i + 1) + ". " + roles[i]);
         }
-        int choice = safeReadIntBounded("Select (1–5): ", 1, 5);
+        int choice = safeReadIntBounded("Select (1–5): ", 5);
         return roles[choice - 1];
     }
 
@@ -172,7 +172,7 @@ public class Main {
         int total = 0;
         for (int i = 0; i < questions.length; i++) {
             System.out.println("Q" + (i + 1) + ": " + questions[i]);
-            total += safeReadIntBounded("Your answer (1–5): ", 1, 5);
+            total += safeReadIntBounded("Your answer (1–5): ", 5);
         }
         return total * 4; // Scale to 0-100 range
     }
@@ -189,11 +189,11 @@ public class Main {
         }
     }
 
-    private static int safeReadIntBounded(String prompt, int min, int max) {
+    private static int safeReadIntBounded(String prompt, int max) {
         while (true) {
             int value = safeReadInt(prompt);
-            if (value >= min && value <= max) return value;
-            System.out.printf("Please enter a number between %d and %d.", min, max);
+            if (value >= 1 && value <= max) return value;
+            System.out.printf("Please enter a number between %d and %d.", 1, max);
         }
     }
 
@@ -202,9 +202,9 @@ public class Main {
         return scanner.nextLine().trim();
     }
 
-    private static int safeReadPositiveInt(String prompt) {
+    private static int safeReadPositiveInt() {
         while (true) {
-            System.out.print(prompt);
+            System.out.print("\nEnter desired team size: ");
             String input = scanner.nextLine().trim();
             if (input.isEmpty()) {
                 System.out.println("Error: Empty input. Please enter a positive number.");
