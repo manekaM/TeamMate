@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class TeamBuilder {
     private static final Logger logger = Logger.getInstance();
 
+    // Original method: Create as many teams as possible with given team size
     public static List<Team> buildTeams(List<Participant> participants, int teamSize) {
         if (teamSize <= 0) teamSize = 5;
         if (participants.isEmpty()) return new ArrayList<>();
@@ -21,7 +22,7 @@ public class TeamBuilder {
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
 
         for (int i = 0; i < numThreads; i++) {
-            executor.submit(new TeamFormationTask(participants, teamSize, candidates));
+            executor.submit(new TeamFormationTask(participants, teamSize, candidates, 0));
         }
 
         executor.shutdown();
@@ -33,7 +34,62 @@ public class TeamBuilder {
             Thread.currentThread().interrupt();
         }
 
-        // Choose best candidate
+        List<Team> best = chooseBestCandidate(candidates);
+
+        for (int i = 0; i < best.size(); i++) {
+            best.get(i).setTeamNumber(i + 1);
+        }
+
+        logger.info("Team formation completed: " + best.size() + " teams created");
+        return best;
+    }
+
+    // New method: Create specific number of teams with given team size
+    public static List<Team> buildSpecificNumberOfTeams(List<Participant> participants, int teamSize, int numberOfTeams) {
+        if (teamSize <= 0) teamSize = 5;
+        if (numberOfTeams <= 0) numberOfTeams = 1;
+        if (participants.isEmpty()) return new ArrayList<>();
+
+        logger.info("Starting team formation: " + participants.size() + " participants, " +
+                numberOfTeams + " teams of size " + teamSize);
+
+        // Check if we have enough participants
+        int totalNeeded = numberOfTeams * teamSize;
+        if (totalNeeded > participants.size()) {
+            logger.info("Warning: Not enough participants for requested teams. Will create partial teams.");
+        }
+
+        int numThreads = 4;
+        List<List<Team>> candidates = new ArrayList<>();
+
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        for (int i = 0; i < numThreads; i++) {
+            executor.submit(new TeamFormationTask(participants, teamSize, candidates, numberOfTeams));
+        }
+
+        executor.shutdown();
+        try {
+            executor.awaitTermination(30, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error("Thread pool interrupted during team formation", e);
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+
+        List<Team> best = chooseBestCandidate(candidates);
+
+        for (int i = 0; i < best.size(); i++) {
+            best.get(i).setTeamNumber(i + 1);
+        }
+
+        logger.info("Team formation completed: " + best.size() + " teams created with " +
+                best.stream().mapToInt(Team::getSize).sum() + " participants");
+        return best;
+    }
+
+    // Helper method to choose the best candidate from all threads
+    private static List<Team> chooseBestCandidate(List<List<Team>> candidates) {
         List<Team> best = null;
         double bestScore = Double.MAX_VALUE;
 
@@ -56,12 +112,6 @@ public class TeamBuilder {
         }
 
         if (best == null) best = new ArrayList<>();
-
-        for (int i = 0; i < best.size(); i++) {
-            best.get(i).setTeamNumber(i + 1);
-        }
-
-        logger.info("Team formation completed: " + best.size() + " teams created");
         return best;
     }
 }

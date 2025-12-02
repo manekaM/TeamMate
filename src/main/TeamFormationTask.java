@@ -10,12 +10,19 @@ public class TeamFormationTask implements Runnable {
     private final List<Participant> participants;
     private final int teamSize;
     private final List<List<Team>> results;
+    private final int maxTeams; // 0 means create as many as possible
 
-    //Constructor
+    //Constructor for creating as many teams as possible
     public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> results) {
+        this(participants, teamSize, results, 0);
+    }
+
+    //Constructor with specific number of teams
+    public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> results, int maxTeams) {
         this.participants = new ArrayList<>(participants);
         this.teamSize = teamSize;
         this.results = results;
+        this.maxTeams = maxTeams;
     }
 
     @Override
@@ -33,7 +40,13 @@ public class TeamFormationTask implements Runnable {
         List<Team> teams = new ArrayList<>();
         int teamNum = 1;
 
-        while (pool.size() >= teamSize || (!pool.isEmpty() && teams.isEmpty())) {
+        // If maxTeams is set, only create that many teams
+        while (!pool.isEmpty() && (maxTeams == 0 || teams.size() < maxTeams)) {
+            // Stop if we don't have enough participants for another team
+            if (pool.size() < teamSize && !teams.isEmpty()) {
+                break;
+            }
+
             Team team = new Team(teamNum++);
             int target = Math.min(teamSize, pool.size());
 
@@ -53,8 +66,10 @@ public class TeamFormationTask implements Runnable {
 
                 for (Participant p : pool) {
                     int score = 0;
-                    boolean sameGame = team.getMembers().stream().anyMatch(m -> m.getPreferredGame().equals(p.getPreferredGame()));
-                    boolean sameRole = team.getMembers().stream().anyMatch(m -> m.getPreferredRole().equals(p.getPreferredRole()));
+                    boolean sameGame = team.getMembers().stream()
+                            .anyMatch(m -> m.getPreferredGame().equals(p.getPreferredGame()));
+                    boolean sameRole = team.getMembers().stream()
+                            .anyMatch(m -> m.getPreferredRole().equals(p.getPreferredRole()));
 
                     if (!sameGame) score += 4;
                     if (!sameRole) score += 3;
@@ -65,15 +80,15 @@ public class TeamFormationTask implements Runnable {
                         best = p;
                     }
                 }
+
                 team.addMember(best);
                 pool.remove(best);
             }
-            teams.add(team);
-        }
 
-        // Add any stragglers to last team
-        if (!pool.isEmpty()) {
-            teams.getLast().getMembers().addAll(pool);
+            // Only add the team if it has members
+            if (team.getSize() > 0) {
+                teams.add(team);
+            }
         }
 
         return teams;

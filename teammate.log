@@ -117,3 +117,22 @@
 [2025-12-02 22:34:39.389] INFO  Exported 25 teams to formed_teams.csv
 [2025-12-02 22:35:01.306] INFO  User selected: Exit Program
 [2025-12-02 22:35:01.307] INFO  Logger shutting down
+[2025-12-03 00:15:37.416] INFO  Logger initialized
+[2025-12-03 00:15:37.416] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 00:15:37.436] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-03 00:15:41.522] INFO  User selected: Form balanced teams
+[2025-12-03 00:15:52.697] INFO  Starting team formation: 100 participants, 20 teams of size 5
+[2025-12-03 00:15:52.749] INFO  Team formation completed: 20 teams created with 100 participants
+[2025-12-03 00:15:52.750] INFO  Teams formed: 20 teams, 100 participants used, 0 remaining
+[2025-12-03 00:15:52.760] INFO  Exported 20 teams to formed_teams.csv
+[2025-12-03 00:16:38.618] INFO  User selected: Form balanced teams
+[2025-12-03 00:16:42.233] INFO  Team formation cancelled: Insufficient participants
+[2025-12-03 00:16:50.381] INFO  User selected: Form balanced teams
+[2025-12-03 00:16:54.676] INFO  Team formation cancelled: Insufficient participants
+[2025-12-03 00:17:21.647] INFO  User selected: Form balanced teams
+[2025-12-03 00:17:51.533] INFO  Starting team formation: 100 participants, 5 teams of size 7
+[2025-12-03 00:17:51.553] INFO  Team formation completed: 5 teams created with 35 participants
+[2025-12-03 00:17:51.556] INFO  Teams formed: 5 teams, 35 participants used, 65 remaining
+[2025-12-03 00:17:51.561] INFO  Exported 5 teams to formed_teams.csv
+[2025-12-03 00:18:12.189] INFO  User selected: Exit Program
+[2025-12-03 00:18:12.190] INFO  Logger shutting down

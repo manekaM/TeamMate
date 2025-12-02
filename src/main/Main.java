@@ -61,31 +61,52 @@ public class Main {
         System.out.println("3. Exit");
     }
 
-    //Form teams by getting the team size
+    //Form teams by getting the team size and number of teams
     private static void formTeamsSafely() {
         if (participants.isEmpty()) {
             System.out.println("No participants available. Please add members first.");
             return;
         }
 
-        int teamSize = safeReadPositiveInt();
+        // Show current participant count
+        System.out.println("\nTotal participants available: " + participants.size());
 
-        if (teamSize > participants.size()) {
-            System.out.printf("Note: Team size (%d) > total participants (%d). Creating 1 team with everyone.%n",
-                    teamSize, participants.size());
+        // Ask for number of teams and team size
+        int numberOfTeams = safeReadPositiveInt("\nEnter number of teams to create: ");
+        int teamSize = safeReadPositiveInt("Enter number of members per team: ");
+
+        int totalNeeded = numberOfTeams * teamSize;
+
+        // Check if we have enough participants
+        if (totalNeeded > participants.size()) {
+            System.out.println(" ===INSUFFICIENT MEMBERS!===\n");
+            System.out.printf("You need: %d participants (%d teams × %d members)%n", totalNeeded, numberOfTeams, teamSize);
+            System.out.printf("Available: %d participants%n", participants.size());
+            System.out.println("\nPlease add more members or reduce the number teams.");
+            System.out.println("Returning to main menu...\n");
+            logger.info("Team formation cancelled: Insufficient participants");
+            return; // Return to main menu
         }
 
         try {
             long start = System.currentTimeMillis();
-            List<Team> teams = TeamBuilder.buildTeams(new ArrayList<>(participants), teamSize);
+            List<Team> teams = TeamBuilder.buildSpecificNumberOfTeams(new ArrayList<>(participants), teamSize, numberOfTeams);
             long time = System.currentTimeMillis() - start;
 
             int totalUsed = teams.stream().mapToInt(Team::getSize).sum();
-            System.out.println("\nTEAM FORMATION COMPLETE! \n");
-            System.out.printf("Created %,d teams using %,d participants \n",
-                    teams.size(), totalUsed);
+            int remainingParticipants = participants.size() - totalUsed;
 
-            logger.info(String.format("Teams formed: %d teams, %d participants \n" , teams.size(), totalUsed));
+            System.out.println(" ===TEAM FORMATION COMPLETE!===\n");
+            System.out.printf("Created: %d teams%n", teams.size());
+            System.out.printf("Total participants used: %d%n", totalUsed);
+            System.out.printf("Remaining participants: %d%n", remainingParticipants);
+
+            if (remainingParticipants > 0) {
+                System.out.println("\nNote: " + remainingParticipants + " members are remaining without teams.\n");
+            }
+
+            logger.info(String.format("Teams formed: %d teams, %d participants used, %d remaining" ,
+                    teams.size(), totalUsed, remainingParticipants));
 
             for (Team team : teams) {
                 System.out.println(team);
@@ -143,7 +164,7 @@ public class Main {
         }
     }
 
-    //Asking the user to enter tge preferred game from the given list
+    //Asking the user to enter the preferred game from the given list
     private static String chooseGame() {
         System.out.println("\nChoose your preferred game:");
         String[] games = {"FIFA", "Valorant", "CS:GO", "DOTA 2", "Basketball", "Chess", "Badminton"};
@@ -154,7 +175,7 @@ public class Main {
         return games[choice - 1];
     }
 
-    //Asking the user to enter tge preferred role from the given list
+    //Asking the user to enter the preferred role from the given list
     private static String chooseRole() {
         System.out.println("\nChoose preferred role:");
         String[] roles = {"Strategist", "Attacker", "Defender", "Supporter", "Coordinator"};
@@ -200,7 +221,7 @@ public class Main {
         while (true) {
             int value = safeReadInt(prompt);
             if (value >= 1 && value <= max) return value;
-            System.out.printf("Please enter a number between %d and %d.", 1, max);
+            System.out.printf("Please enter a number between %d and %d.%n", 1, max);
         }
     }
 
@@ -209,9 +230,9 @@ public class Main {
         return scanner.nextLine().trim();
     }
 
-    private static int safeReadPositiveInt() {
+    private static int safeReadPositiveInt(String prompt) {
         while (true) {
-            System.out.print("\nEnter desired team size: ");
+            System.out.print(prompt);
             String input = scanner.nextLine().trim();
             if (input.isEmpty()) {
                 System.out.println("Error: Empty input. Please enter a positive number.");
@@ -220,7 +241,7 @@ public class Main {
             try {
                 int value = Integer.parseInt(input);
                 if (value <= 0) {
-                    System.out.println("Error: Team size must be greater than 0.");
+                    System.out.println("Error: Must be greater than 0.");
                 } else {
                     return value;
                 }
