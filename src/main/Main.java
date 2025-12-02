@@ -12,18 +12,15 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(" TeamMate – Gaming Club Team Formation ");
 
-        // Load participants at startup with full exception handling
         try {
             participants = FileHandler.readParticipants(CSV_FILE);
         } catch (FileProcessingException e) {
             System.err.println("FATAL ERROR: Cannot load participant data!");
             System.err.println("→ " + e.getMessage());
-            System.err.println("The application cannot continue without the CSV file.");
             System.err.println("Please check that 'data/participants_sample.csv' exists.");
             System.exit(1);
         }
 
-        // Main menu loop
         while (true) {
             displayMenu();
             int choice = safeReadInt("Choose option (1-4): ");
@@ -43,12 +40,53 @@ public class Main {
     }
 
     private static void displayMenu() {
-        System.out.println(" MAIN MENU ");
+        System.out.println("\n MAIN MENU ");
         System.out.println("1. Add new club member (Take Survey)");
         System.out.println("2. Form balanced teams");
         System.out.println("3. Show club statistics");
         System.out.println("4. Exit");
     }
+
+    private static void formTeamsSafely() {
+        if (participants.isEmpty()) {
+            System.out.println("No participants available. Please add members first.");
+            return;
+        }
+
+        int teamSize = safeReadPositiveInt("\nEnter desired team size (e.g. 5): ");
+
+        if (teamSize > participants.size()) {
+            System.out.printf("Note: Team size (%d) > total participants (%d). Creating 1 team with everyone.%n",
+                    teamSize, participants.size());
+        }
+
+        System.out.println("\nForming balanced teams using multi-threading...");
+
+        try {
+            long start = System.currentTimeMillis();
+            List<Team> teams = TeamBuilder.buildTeams(new ArrayList<>(participants), teamSize);
+            long time = System.currentTimeMillis() - start;
+
+            int totalUsed = teams.stream().mapToInt(Team::getSize).sum();
+            System.out.println("\nTEAM FORMATION COMPLETE!");
+            System.out.printf("Created %,d team(s) using %,d participants in %,d ms%n%n",
+                    teams.size(), totalUsed, time);
+
+            for (Team team : teams) {
+                System.out.println(team);
+            }
+
+            FileHandler.writeTeams(teams, "formed_teams.csv");
+            System.out.println("Teams exported to 'formed_teams.csv'");
+
+        } catch (Exception e) {
+            System.err.println("Error during team formation: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Other methods unchanged (addNewMemberWithSurvey, showStatistics, etc.)
+    // ... [keep your existing code for these]
 
     private static void addNewMemberWithSurvey() {
         System.out.println("\n=== NEW MEMBER REGISTRATION SURVEY ===");
@@ -70,10 +108,8 @@ public class Main {
         String id = String.format("P%03d", participants.size() + 1);
 
         Participant newMember = new Participant(id, name, email, game, skill, role, personalityScore);
-
         participants.add(newMember);
 
-        // Save to file with exception handling
         try {
             FileHandler.appendParticipant(CSV_FILE, newMember);
             System.out.println("\nSUCCESS! " + name + " has been added and saved permanently!");
@@ -86,59 +122,6 @@ public class Main {
         }
     }
 
-    private static void formTeamsSafely() {
-        if (participants.isEmpty()) {
-            System.out.println("No participants available. Please add members first.");
-            return;
-        }
-
-        int teamSize = safeReadIntBounded("Enter desired team size (3–10, recommended 5): ", 3, 10);
-
-        System.out.println("\nForming balanced teams using multi-threading...");
-
-        try {
-            long start = System.currentTimeMillis();
-            List<Team> teams = TeamBuilder.buildTeams(new ArrayList<>(participants), teamSize);
-            long time = System.currentTimeMillis() - start;
-
-            System.out.println("\nTEAM FORMATION COMPLETE!");
-            System.out.printf("Created %d teams in %d ms\n\n", teams.size(), time);
-
-            for (Team team : teams) {
-                System.out.println(team);
-            }
-
-            FileHandler.writeTeams(teams, "formed_teams.csv");
-            System.out.println("Teams exported to 'formed_teams.csv'");
-
-        } catch (Exception e) {
-            System.err.println("Unexpected error during team formation: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private static void showStatistics() {
-        if (participants.isEmpty()) {
-            System.out.println("No data available yet.");
-            return;
-        }
-
-        System.out.println("\n=== CLUB STATISTICS ===");
-        System.out.println("Total members: " + participants.size());
-
-        long leaders = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.LEADER).count();
-        long balanced = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.BALANCED).count();
-        long thinkers = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.THINKER).count();
-
-        System.out.println("Leaders: " + leaders);
-        System.out.println("Balanced: " + balanced);
-        System.out.println("Thinkers: " + thinkers);
-
-        double avgSkill = participants.stream().mapToInt(Participant::getSkillLevel).average().orElse(0);
-        System.out.printf("Average skill level: %.2f/10\n", avgSkill);
-    }
-
-    // Helper methods with validation
     private static String chooseGame() {
         System.out.println("\nChoose preferred game:");
         String[] games = {"FIFA", "Valorant", "CS:GO", "DOTA 2", "Basketball", "Chess", "Badminton"};
@@ -174,10 +157,31 @@ public class Main {
             System.out.println("Q" + (i + 1) + ": " + questions[i]);
             total += safeReadIntBounded("Your answer (1–5): ", 1, 5);
         }
-        return total * 4; // Scale 5–25 → 20–100
+        return total * 4;
     }
 
-    // Safe input methods (never crash)
+    private static void showStatistics() {
+        if (participants.isEmpty()) {
+            System.out.println("No data available yet.");
+            return;
+        }
+
+        System.out.println("\n=== CLUB STATISTICS ===");
+        System.out.println("Total members: " + participants.size());
+
+        long leaders = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.LEADER).count();
+        long balanced = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.BALANCED).count();
+        long thinkers = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.THINKER).count();
+
+        System.out.println("Leaders: " + leaders);
+        System.out.println("Balanced: " + balanced);
+        System.out.println("Thinkers: " + thinkers);
+
+        double avgSkill = participants.stream().mapToInt(Participant::getSkillLevel).average().orElse(0);
+        System.out.printf("Average skill level: %.2f/10\n", avgSkill);
+    }
+
+    // SAFE INPUT METHODS – NEVER CRASH
     private static int safeReadInt(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -192,9 +196,7 @@ public class Main {
     private static int safeReadIntBounded(String prompt, int min, int max) {
         while (true) {
             int value = safeReadInt(prompt);
-            if (value >= min && value <= max) {
-                return value;
-            }
+            if (value >= min && value <= max) return value;
             System.out.printf("Please enter a number between %d and %d.\n", min, max);
         }
     }
@@ -202,5 +204,27 @@ public class Main {
     private static String safeReadString(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().trim();
+    }
+
+    // NEW: 100% safe positive integer input
+    private static int safeReadPositiveInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                System.out.println("Error: Empty input. Please enter a positive number.");
+                continue;
+            }
+            try {
+                int value = Integer.parseInt(input);
+                if (value <= 0) {
+                    System.out.println("Error: Team size must be greater than 0.");
+                } else {
+                    return value;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: '" + input + "' is not a valid number.");
+            }
+        }
     }
 }
