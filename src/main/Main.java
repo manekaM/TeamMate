@@ -11,9 +11,9 @@ public class Main {
     private static final Logger logger = Logger.getInstance();
 
     public static void main(String[] args) {
-        logger.info("=== TeamMate Application STARTED ===");
+        logger.info("=== WELCOME TO TEAMMATE ===");
 
-        System.out.println(" TeamMate – Gaming Club Team Formation ");
+        System.out.println(" Welcome to TeamMate – University Gaming Club Team Formation ");
 
         try {
             participants = FileHandler.readParticipants(CSV_FILE);
@@ -40,8 +40,8 @@ public class Main {
                 }
 
                 case 3 -> {
-                    logger.info("User selected: Exit application");
-                    System.out.println("Thank you for using TeamMate! Goodbye!");
+                    logger.info("User selected: Exit Program");
+                    System.out.println("Thank you for using TeamMate!");
                     scanner.close();
                     logger.close();
                     logger.info("=== TeamMate Application EXITED ===");
@@ -54,7 +54,7 @@ public class Main {
 
     private static void displayMenu() {
         System.out.println("\n MAIN MENU ");
-        System.out.println("1. Add new club member (Take Survey)");
+        System.out.println("1. Add new member (Take Survey)");
         System.out.println("2. Form Teams");
         System.out.println("3. Exit");
     }
@@ -101,11 +101,11 @@ public class Main {
     private static void addNewMemberWithSurvey() {
         System.out.println("\n=== NEW MEMBER REGISTRATION SURVEY ===");
 
-        String name = safeReadString("Enter your name (or press Enter for default): ");
+        String name = safeReadString("Enter your name or press Enter for default): ");
         if (name.isEmpty()) name = "Participant_" + (participants.size() + 101);
 
         String email = safeReadString("Enter email: ");
-        if (email.isEmpty()) email = "user" + (participants.size() + 101) + "@rgu.ac.uk";
+        if (email.isEmpty()) email = "user" + (participants.size() + 101) + "@gmail.com";
 
         String game = chooseGame();
         String role = chooseRole();
@@ -166,13 +166,6 @@ public class Main {
             total += safeReadIntBounded("Your answer (1–5): ", 1, 5);
         }
         return total * 4; // Scale to 0-100 range
-    }
-
-    private static void showStatistics() {
-        if (participants.isEmpty()) {
-            System.out.println("No data available yet.");
-            return;
-        }
     }
 
     // SAFE INPUT METHODS
