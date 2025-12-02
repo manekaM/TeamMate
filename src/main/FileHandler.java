@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler {
+    private static final Logger logger = Logger.getInstance();
 
     public static List<Participant> readParticipants(String filename) throws FileProcessingException {
         List<Participant> participants = new ArrayList<>();
         File file = new File(filename);
 
         if (!file.exists()) {
+            logger.error("Participants file not found: " + filename, null);
             throw new FileProcessingException("Participants file not found: " + filename, null);
         }
 
@@ -47,10 +49,12 @@ public class FileHandler {
                 }
             }
         } catch (IOException | InvalidParticipantDataException e) {
+            logger.error("Failed to read file: " + filename, e);
             throw new FileProcessingException("Failed to read file: " + filename, e);
         }
 
         System.out.println("Successfully loaded " + participants.size() + " participants.");
+        logger.info("Loaded " + participants.size() + " participants from " + filename);
         return participants;
     }
 
@@ -61,23 +65,24 @@ public class FileHandler {
                     p.getSkillLevel(), p.getPreferredRole(),
                     p.getPersonalityScore(), p.getPersonalityType()
             );
+            logger.info("Appended participant " + p.getId() + " to " + filename);
         } catch (IOException e) {
+            logger.error("Could not append participant " + p.getId() + " to file", e);
             throw new FileProcessingException("Could not save new member to file", e);
         }
     }
 
     public static void writeTeams(List<Team> teams, String filename) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {
-            // Header
             pw.println("TeamNumber,ParticipantID,Name,Game,Role,Personality,Skill");
 
             int teamCounter = 1;
             for (Team team : teams) {
-                String teamName = "Team " + teamCounter;  // This is what the lecturer wants
+                String teamName = "Team " + teamCounter;
 
                 for (Participant p : team.getMembers()) {
                     pw.printf("%s,%s,%s,%s,%s,%s,%d%n",
-                            teamName,                     // ← Team 1, Team 1, Team 1...
+                            teamName,
                             p.getId(),
                             p.getName(),
                             p.getPreferredGame(),
@@ -89,7 +94,9 @@ public class FileHandler {
                 teamCounter++;
             }
             System.out.println("Teams successfully saved to " + filename);
+            logger.info("Exported " + teams.size() + " teams to " + filename);
         } catch (IOException e) {
+            logger.error("Failed to write teams to " + filename, e);
             System.err.println("Could not write file: " + e.getMessage());
             e.printStackTrace();
         }

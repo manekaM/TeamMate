@@ -7,10 +7,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class TeamBuilder {
+    private static final Logger logger = Logger.getInstance();
 
     public static List<Team> buildTeams(List<Participant> participants, int teamSize) {
         if (teamSize <= 0) teamSize = 5;
         if (participants.isEmpty()) return new ArrayList<>();
+
+        logger.info("Starting team formation: " + participants.size() + " participants, target team size = " + teamSize);
 
         int numThreads = 4;
         List<List<Team>> candidates = new ArrayList<>();
@@ -25,6 +28,7 @@ public class TeamBuilder {
         try {
             executor.awaitTermination(30, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
+            logger.error("Thread pool interrupted during team formation", e);
             executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
@@ -37,12 +41,10 @@ public class TeamBuilder {
             if (candidate.isEmpty()) continue;
 
             double variance = candidate.stream()
-                    .mapToDouble(t -> {
-                        double avg = t.getAverageSkill();
-                        return t.getMembers().stream()
-                                .mapToDouble(p -> Math.pow(p.getSkillLevel() - avg, 2))
-                                .sum();
-                    }).sum() / candidate.size();
+                    .mapToDouble(t -> t.getMembers().stream()
+                            .mapToDouble(p -> Math.pow(p.getSkillLevel() - t.getAverageSkill(), 2))
+                            .sum())
+                    .sum() / candidate.size();
 
             int totalUsed = candidate.stream().mapToInt(Team::getSize).sum();
             double score = variance - (totalUsed * 0.0001);
@@ -55,11 +57,11 @@ public class TeamBuilder {
 
         if (best == null) best = new ArrayList<>();
 
-        // Renumber teams
         for (int i = 0; i < best.size(); i++) {
             best.get(i).setTeamNumber(i + 1);
         }
 
+        logger.info("Team formation completed: " + best.size() + " teams created");
         return best;
     }
 }

@@ -8,13 +8,17 @@ public class Main {
     private static final String CSV_FILE = "data/participants_sample.csv";
     private static List<Participant> participants = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
+    private static final Logger logger = Logger.getInstance();
 
     public static void main(String[] args) {
+        logger.info("=== TeamMate Application STARTED ===");
+
         System.out.println(" TeamMate – Gaming Club Team Formation ");
 
         try {
             participants = FileHandler.readParticipants(CSV_FILE);
         } catch (FileProcessingException e) {
+            logger.error("FATAL: Cannot load participant data", e);
             System.err.println("FATAL ERROR: Cannot load participant data!");
             System.err.println("→ " + e.getMessage());
             System.err.println("Please check that 'data/participants_sample.csv' exists.");
@@ -26,12 +30,24 @@ public class Main {
             int choice = safeReadInt("Choose option (1-4): ");
 
             switch (choice) {
-                case 1 -> addNewMemberWithSurvey();
-                case 2 -> formTeamsSafely();
-                case 3 -> showStatistics();
+                case 1 -> {
+                    logger.info("User selected: Add new club member");
+                    addNewMemberWithSurvey();
+                }
+                case 2 -> {
+                    logger.info("User selected: Form balanced teams");
+                    formTeamsSafely();
+                }
+                case 3 -> {
+                    logger.info("User selected: Show club statistics");
+                    showStatistics();
+                }
                 case 4 -> {
+                    logger.info("User selected: Exit application");
                     System.out.println("Thank you for using TeamMate! Goodbye!");
                     scanner.close();
+                    logger.close();
+                    logger.info("=== TeamMate Application EXITED ===");
                     return;
                 }
                 default -> System.out.println("Invalid option. Please enter 1–4.");
@@ -72,6 +88,8 @@ public class Main {
             System.out.printf("Created %,d team(s) using %,d participants in %,d ms%n%n",
                     teams.size(), totalUsed, time);
 
+            logger.info(String.format("Teams formed: %d teams, %d participants, %d ms", teams.size(), totalUsed, time));
+
             for (Team team : teams) {
                 System.out.println(team);
             }
@@ -80,13 +98,11 @@ public class Main {
             System.out.println("Teams exported to 'formed_teams.csv'");
 
         } catch (Exception e) {
+            logger.error("Team formation failed", e);
             System.err.println("Error during team formation: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-    // Other methods unchanged (addNewMemberWithSurvey, showStatistics, etc.)
-    // ... [keep your existing code for these]
 
     private static void addNewMemberWithSurvey() {
         System.out.println("\n=== NEW MEMBER REGISTRATION SURVEY ===");
@@ -108,22 +124,20 @@ public class Main {
         String id = String.format("P%03d", participants.size() + 1);
 
         Participant newMember = new Participant(id, name, email, game, skill, role, personalityScore);
-        participants.add(newMember);
 
+        participants.add(newMember);
         try {
             FileHandler.appendParticipant(CSV_FILE, newMember);
-            System.out.println("\nSUCCESS! " + name + " has been added and saved permanently!");
-            System.out.println("→ ID: " + id + " | Game: " + game + " | Role: " + role);
-            System.out.println("→ Personality: " + type + " (Score: " + personalityScore + ")");
-            System.out.println("→ Skill Level: " + skill + "/10");
+            System.out.println("Welcome, " + newMember.getName() + "! Your data has been saved.");
+            logger.info("New member added: " + id + " | " + name + " | " + game + " | Skill: " + skill);
         } catch (FileProcessingException e) {
-            System.err.println("Could not save member to file: " + e.getMessage());
-            System.err.println("Member added to current session but will be lost on exit.");
+            logger.error("Failed to save new member to file", e);
+            System.err.println("Error saving data: " + e.getMessage());
         }
     }
 
     private static String chooseGame() {
-        System.out.println("\nChoose preferred game:");
+        System.out.println("\nChoose your preferred game:");
         String[] games = {"FIFA", "Valorant", "CS:GO", "DOTA 2", "Basketball", "Chess", "Badminton"};
         for (int i = 0; i < games.length; i++) {
             System.out.println((i + 1) + ". " + games[i]);
@@ -157,7 +171,7 @@ public class Main {
             System.out.println("Q" + (i + 1) + ": " + questions[i]);
             total += safeReadIntBounded("Your answer (1–5): ", 1, 5);
         }
-        return total * 4;
+        return total * 4; // Scale to 0-100 range
     }
 
     private static void showStatistics() {
@@ -179,9 +193,12 @@ public class Main {
 
         double avgSkill = participants.stream().mapToInt(Participant::getSkillLevel).average().orElse(0);
         System.out.printf("Average skill level: %.2f/10\n", avgSkill);
+
+        logger.info(String.format("Statistics shown: %d members | Leaders:%d Balanced:%d Thinkers:%d AvgSkill:%.2f",
+                participants.size(), leaders, balanced, thinkers, avgSkill));
     }
 
-    // SAFE INPUT METHODS – NEVER CRASH
+    // SAFE INPUT METHODS(So numbers will only be calculated)
     private static int safeReadInt(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -206,7 +223,6 @@ public class Main {
         return scanner.nextLine().trim();
     }
 
-    // NEW: 100% safe positive integer input
     private static int safeReadPositiveInt(String prompt) {
         while (true) {
             System.out.print(prompt);
