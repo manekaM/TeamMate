@@ -27,7 +27,7 @@ public class Main {
 
         while (true) {
             displayMenu();
-            int choice = safeReadInt("Choose option (1-4): ");
+            int choice = safeReadInt("Choose option (1-3): ");
 
             switch (choice) {
                 case 1 -> {
@@ -38,11 +38,8 @@ public class Main {
                     logger.info("User selected: Form balanced teams");
                     formTeamsSafely();
                 }
+
                 case 3 -> {
-                    logger.info("User selected: Show club statistics");
-                    showStatistics();
-                }
-                case 4 -> {
                     logger.info("User selected: Exit application");
                     System.out.println("Thank you for using TeamMate! Goodbye!");
                     scanner.close();
@@ -50,7 +47,7 @@ public class Main {
                     logger.info("=== TeamMate Application EXITED ===");
                     return;
                 }
-                default -> System.out.println("Invalid option. Please enter 1–4.");
+                default -> System.out.println("Invalid option. Please enter 1–3.");
             }
         }
     }
@@ -58,9 +55,8 @@ public class Main {
     private static void displayMenu() {
         System.out.println("\n MAIN MENU ");
         System.out.println("1. Add new club member (Take Survey)");
-        System.out.println("2. Form balanced teams");
-        System.out.println("3. Show club statistics");
-        System.out.println("4. Exit");
+        System.out.println("2. Form Teams");
+        System.out.println("3. Exit");
     }
 
     private static void formTeamsSafely() {
@@ -69,14 +65,12 @@ public class Main {
             return;
         }
 
-        int teamSize = safeReadPositiveInt("\nEnter desired team size (e.g. 5): ");
+        int teamSize = safeReadPositiveInt("\nEnter desired team size: ");
 
         if (teamSize > participants.size()) {
             System.out.printf("Note: Team size (%d) > total participants (%d). Creating 1 team with everyone.%n",
                     teamSize, participants.size());
         }
-
-        System.out.println("\nForming balanced teams using multi-threading...");
 
         try {
             long start = System.currentTimeMillis();
@@ -85,17 +79,17 @@ public class Main {
 
             int totalUsed = teams.stream().mapToInt(Team::getSize).sum();
             System.out.println("\nTEAM FORMATION COMPLETE!");
-            System.out.printf("Created %,d team(s) using %,d participants in %,d ms%n%n",
+            System.out.printf("Created %,d team(s) using %,d participants ",
                     teams.size(), totalUsed, time);
 
-            logger.info(String.format("Teams formed: %d teams, %d participants, %d ms", teams.size(), totalUsed, time));
+            logger.info(String.format("Teams formed: %d teams, %d participants", teams.size(), totalUsed, time));
 
             for (Team team : teams) {
                 System.out.println(team);
             }
 
             FileHandler.writeTeams(teams, "formed_teams.csv");
-            System.out.println("Teams exported to 'formed_teams.csv'");
+            System.out.println("Teams saved to 'formed_teams.csv'");
 
         } catch (Exception e) {
             logger.error("Team formation failed", e);
@@ -179,26 +173,9 @@ public class Main {
             System.out.println("No data available yet.");
             return;
         }
-
-        System.out.println("\n=== CLUB STATISTICS ===");
-        System.out.println("Total members: " + participants.size());
-
-        long leaders = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.LEADER).count();
-        long balanced = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.BALANCED).count();
-        long thinkers = participants.stream().filter(p -> p.getPersonalityType() == PersonalityType.THINKER).count();
-
-        System.out.println("Leaders: " + leaders);
-        System.out.println("Balanced: " + balanced);
-        System.out.println("Thinkers: " + thinkers);
-
-        double avgSkill = participants.stream().mapToInt(Participant::getSkillLevel).average().orElse(0);
-        System.out.printf("Average skill level: %.2f/10\n", avgSkill);
-
-        logger.info(String.format("Statistics shown: %d members | Leaders:%d Balanced:%d Thinkers:%d AvgSkill:%.2f",
-                participants.size(), leaders, balanced, thinkers, avgSkill));
     }
 
-    // SAFE INPUT METHODS(So numbers will only be calculated)
+    // SAFE INPUT METHODS
     private static int safeReadInt(String prompt) {
         while (true) {
             System.out.print(prompt);

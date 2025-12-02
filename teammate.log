@@ -20,3 +20,10 @@
 [2025-12-02 14:51:52.984] INFO  Statistics shown: 100 members | Leaders:34 Balanced:33 Thinkers:33 AvgSkill:5.56
 [2025-12-02 14:51:57.405] INFO  User selected: Exit application
 [2025-12-02 14:51:57.406] INFO  Logger shutting down
+[2025-12-02 17:51:03.977] INFO  Logger initialized
+[2025-12-02 17:51:03.977] INFO  === TeamMate Application STARTED ===
+[2025-12-02 17:51:04.009] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 17:51:07.335] INFO  User selected: Show club statistics
+[2025-12-02 17:51:07.348] INFO  Statistics shown: 100 members | Leaders:34 Balanced:33 Thinkers:33 AvgSkill:5.56
+[2025-12-02 17:51:18.159] INFO  User selected: Exit application
+[2025-12-02 17:51:18.159] INFO  Logger shutting down
