@@ -8,78 +8,84 @@ import java.util.Random;
 public class TeamFormationTask implements Runnable {
     private final List<Participant> participants;
     private final int teamSize;
-    private final List<Team> resultTeams;
+    private final List<List<Team>> allCandidates;  // Shared list to collect results
 
-    public TeamFormationTask(List<Participant> participants, int teamSize, List<Team> resultTeams) {
+    public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> allCandidates) {
         this.participants = new ArrayList<>(participants);
         this.teamSize = teamSize;
-        this.resultTeams = resultTeams;
+        this.allCandidates = allCandidates;
     }
 
     @Override
     public void run() {
-        System.out.println("Thread " + Thread.currentThread().getName() + " is forming teams...");
-        List<Team> teams = formBalancedTeams(participants, teamSize);
-        synchronized (resultTeams) {
-            resultTeams.addAll(teams);
+        System.out.println("Thread " + Thread.currentThread().getName() + " starting team formation...");
+        List<Team> teams = formBalancedTeams(new ArrayList<>(participants), teamSize);
+
+        synchronized (allCandidates) {
+            allCandidates.add(teams);
         }
     }
 
-    // Simple but effective balancing algorithm
-    private List<Team> formBalancedTeams(List<Participant> all, int size) {
-        Collections.shuffle(all, new Random());
-        List<Participant> pool = new ArrayList<>(all);
+    private List<Team> formBalancedTeams(List<Participant> source, int size) {
+        Collections.shuffle(source, new Random());
+        List<Participant> pool = new ArrayList<>(source);
         List<Team> teams = new ArrayList<>();
-
         int teamNum = 1;
+
         while (pool.size() >= size) {
             Team team = new Team(teamNum++);
-            // Sort by rarity to pick diverse first
-            pool.sort((a, b) -> {
-                int countA = (int) pool.stream().filter(p -> p.getPreferredGame().equals(a.getPreferredGame())).count();
-                int countB = (int) pool.stream().filter(p -> p.getPreferredGame().equals(b.getPreferredGame())).count();
-                return Integer.compare(countA, countB);
-            });
 
-            // Try to get 1 Leader
+            // Prefer one Leader per team if possible
             pool.stream()
-                    .filter(p -> p.getPersonalityType() == PersonalityType.LEADER && team.getSize() < size)
+                    .filter(p -> p.getPersonalityType() == PersonalityType.LEADER)
                     .findFirst()
-                    .ifPresent(p -> { team.addMember(p); pool.remove(p); });
+                    .ifPresent(p -> {
+                        team.addMember(p);
+                        pool.remove(p);
+                    });
 
-            // Fill the rest with variety
+            // Fill team with diversity
             while (team.getSize() < size && !pool.isEmpty()) {
                 Participant best = null;
                 int bestScore = -1;
 
-                for (Participant candidate : pool) {
+                for (Participant p : pool) {
                     int score = 0;
-                    boolean sameGame = team.getMembers().stream()
-                            .anyMatch(m -> m.getPreferredGame().equals(candidate.getPreferredGame()));
-                    boolean sameRole = team.getMembers().stream()
-                            .anyMatch(m -> m.getPreferredRole().equals(candidate.getPreferredRole()));
+                    boolean hasSameGame = team.getMembers().stream()
+                            .anyMatch(m -> m.getPreferredGame().equals(p.getPreferredGame()));
+                    boolean hasSameRole = team.getMembers().stream()
+                            .anyMatch(m -> m.getPreferredRole().equals(p.getPreferredRole()));
 
-                    if (!sameGame) score += 3;
-                    if (!sameRole) score += 2;
-                    if (candidate.getPersonalityType() == PersonalityType.THINKER) score += 1;
+                    if (!hasSameGame) score += 4;
+                    if (!hasSameRole) score += 3;
+                    if (p.getPersonalityType() == PersonalityType.THINKER) score += 1;
+                    if (p.getSkillLevel() >= 7) score += 1; // slight bias toward skilled players
 
                     if (score > bestScore) {
                         bestScore = score;
-                        best = candidate;
+                        best = p;
                     }
                 }
+
                 if (best != null) {
                     team.addMember(best);
                     pool.remove(best);
-                } else {
-                    break;
                 }
             }
-            if (team.getSize() >= size * 0.8) { // accept nearly full teams
+
+            if (team.getSize() >= size * 0.8) {
                 teams.add(team);
             }
         }
+
+        // Add leftover participants to last team if reasonable
+        if (!pool.isEmpty() && !teams.isEmpty()) {
+            Team last = teams.get(teams.size() - 1);
+            while (last.getSize() < size && !pool.isEmpty()) {
+                last.addMember(pool.remove(0));
+            }
+        }
+
         return teams;
     }
 }
-

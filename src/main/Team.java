@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
-    private final int teamNumber;
+    private int teamNumber;
     private final List<Participant> members = new ArrayList<>();
 
     public Team(int teamNumber) {
         this.teamNumber = teamNumber;
+    }
+
+    public void setTeamNumber(int teamNumber) {
+        this.teamNumber = teamNumber;
+    }
+
+    public int getTeamNumber() {
+        return teamNumber;
     }
 
     public void addMember(Participant p) {
