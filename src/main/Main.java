@@ -101,24 +101,33 @@ public class Main {
     private static void addNewMemberWithSurvey() {
         System.out.println("\n=== NEW MEMBER REGISTRATION SURVEY ===");
 
-        String name = safeReadString("Enter your name or press Enter for default): ");
-        if (name.isEmpty()) name = "Participant_" + (participants.size() + 101);
+        String name = "";
+        while (name.trim().isEmpty()) {
+            name = safeReadString("Enter your name (required): ");
+            if (name.trim().isEmpty()) {
+                System.out.println("Error: Name cannot be empty. Please try again.");
+            }
+        }
 
-        String email = safeReadString("Enter email: ");
-        if (email.isEmpty()) email = "user" + (participants.size() + 101) + "@gmail.com";
-
+        String email = "";
+        while (email.trim().isEmpty() || !email.contains("@")) {
+            email = safeReadString("Enter your email (must contain @): ");
+            if (email.trim().isEmpty()) {
+                System.out.println("Error: Email cannot be empty.");
+            } else if (!email.contains("@")) {
+                System.out.println("Error: Please enter a valid email address containing '@'.");
+            }
+        }
         String game = chooseGame();
         String role = chooseRole();
 
         int personalityScore = conductPersonalitySurvey();
-        PersonalityType type = PersonalityType.fromScore(personalityScore);
 
-        int skill = safeReadIntBounded("\nRate your overall skill level (1=Beginner, 10=Pro): ", 1, 10);
+        int skill = safeReadIntBounded("\nEnter your skill level (1=Beginner, 10=Pro): ", 1, 10);
 
         String id = String.format("P%03d", participants.size() + 1);
 
         Participant newMember = new Participant(id, name, email, game, skill, role, personalityScore);
-
         participants.add(newMember);
         try {
             FileHandler.appendParticipant(CSV_FILE, newMember);
