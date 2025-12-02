@@ -55,7 +55,7 @@ public class Main {
 
     //Displays the Main Menu Options
     private static void displayMenu() {
-        System.out.println("\n MAIN MENU ");
+        System.out.println("\n === MAIN MENU === ");
         System.out.println("1. Add new member (Take Survey)");
         System.out.println("2. Form Teams");
         System.out.println("3. Exit");
@@ -92,7 +92,6 @@ public class Main {
             }
 
             FileHandler.writeTeams(teams, "formed_teams.csv");
-            System.out.println("Teams saved to 'formed_teams.csv'");
 
         } catch (Exception e) {
             logger.error("Team formation failed", e);

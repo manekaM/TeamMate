@@ -86,3 +86,34 @@
 [2025-12-02 18:59:22.504] INFO  === WELCOME TO TEAMMATE ===
 [2025-12-02 18:59:22.511] INFO  Loaded 100 participants from data/participants_sample.csv
 [2025-12-02 18:59:34.100] INFO  User selected: Add new club member
+[2025-12-02 22:20:56.351] INFO  Logger initialized
+[2025-12-02 22:20:56.351] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-02 22:20:56.478] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 22:21:12.845] INFO  User selected: Form balanced teams
+[2025-12-02 22:21:17.948] INFO  Starting team formation: 100 participants, target team size = 5
+[2025-12-02 22:21:18.051] INFO  Team formation completed: 20 teams created
+[2025-12-02 22:21:18.052] INFO  Teams formed: 20 teams, 100 participants 
+
+[2025-12-02 22:21:18.068] INFO  Exported 20 teams to formed_teams.csv
+[2025-12-02 22:30:57.491] INFO  Logger initialized
+[2025-12-02 22:30:57.491] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-02 22:30:57.519] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 22:31:02.483] INFO  User selected: Form balanced teams
+[2025-12-02 22:31:06.061] INFO  Starting team formation: 100 participants, target team size = 6
+[2025-12-02 22:31:06.123] INFO  Team formation completed: 16 teams created
+[2025-12-02 22:31:06.124] INFO  Teams formed: 16 teams, 100 participants 
+
+[2025-12-02 22:31:06.137] INFO  Exported 16 teams to formed_teams.csv
+[2025-12-02 22:33:08.235] INFO  User selected: Exit Program
+[2025-12-02 22:33:08.235] INFO  Logger shutting down
+[2025-12-02 22:34:19.848] INFO  Logger initialized
+[2025-12-02 22:34:19.848] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-02 22:34:19.869] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-02 22:34:35.431] INFO  User selected: Form balanced teams
+[2025-12-02 22:34:39.323] INFO  Starting team formation: 100 participants, target team size = 4
+[2025-12-02 22:34:39.379] INFO  Team formation completed: 25 teams created
+[2025-12-02 22:34:39.380] INFO  Teams formed: 25 teams, 100 participants 
+
+[2025-12-02 22:34:39.389] INFO  Exported 25 teams to formed_teams.csv
+[2025-12-02 22:35:01.306] INFO  User selected: Exit Program
+[2025-12-02 22:35:01.307] INFO  Logger shutting down
