@@ -6,45 +6,6 @@ import java.util.concurrent.*;
 public class TeamBuilder {
     private static final Logger logger = Logger.getInstance();
 
-    //Creates as many teams as possible with given team size
-    public static List<Team> buildTeams(List<Participant> participants, int teamSize) {
-        // Validation
-        if (teamSize <= 0) teamSize = 5;
-        if (participants.isEmpty()) return new ArrayList<>();
-
-        logger.info("Starting team formation: " + participants.size() + " participants, target team size = " + teamSize);
-
-        int numberOfAttempts = 4;
-        List<List<Team>> allAttempts = new ArrayList<>();
-
-        // Create a thread pool to run attempts in parallel
-        ExecutorService threadPool = Executors.newFixedThreadPool(numberOfAttempts);
-
-        for (int i = 0; i < numberOfAttempts; i++) {
-            threadPool.submit(new TeamFormationTask(participants, teamSize, allAttempts, 0));
-        }
-        threadPool.shutdown();
-
-        try {
-            threadPool.awaitTermination(30, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            logger.error("Thread pool interrupted during team formation", e);
-            threadPool.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-
-        // Pick the best result from all attempts
-        List<Team> bestTeams = pickBestTeamSet(allAttempts);
-
-        for (int i = 0; i < bestTeams.size(); i++) {
-            bestTeams.get(i).setTeamNumber(i + 1);
-        }
-
-        logger.info("Team formation completed: " + bestTeams.size() + " teams created");
-        logDetailedStatistics(bestTeams);
-        return bestTeams;
-    }
-
     //Creates specific number of teams with given team size
     public static List<Team> buildSpecificNumberOfTeams(List<Participant> participants,
                                                         int teamSize,

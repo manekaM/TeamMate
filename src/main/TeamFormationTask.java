@@ -10,10 +10,6 @@ public class TeamFormationTask implements Runnable {
     private final int maxTeams;
 
     // Constructors
-    public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> results) {
-        this(participants, teamSize, results, 0);
-    }
-
     public TeamFormationTask(List<Participant> participants, int teamSize, List<List<Team>> results, int maxTeams) {
         this.participants = new ArrayList<>(participants);
         this.teamSize = teamSize;
