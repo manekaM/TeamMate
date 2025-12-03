@@ -169,3 +169,66 @@
 [2025-12-03 11:36:01.528] INFO  Exported 5 teams to formed_teams.csv
 [2025-12-03 11:37:05.629] INFO  User selected: Exit Program
 [2025-12-03 11:37:05.630] INFO  Logger shutting down
+[2025-12-03 14:05:50.373] INFO  Logger initialized
+[2025-12-03 14:05:50.373] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 14:05:50.391] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-03 14:06:05.561] INFO  User selected: Exit Program
+[2025-12-03 14:06:05.564] INFO  Logger shutting down
+[2025-12-03 14:07:28.705] INFO  Logger initialized
+[2025-12-03 14:07:28.705] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 14:07:28.721] INFO  Loaded 0 participants from data/participants_sample.csv
+[2025-12-03 14:07:34.778] INFO  User selected: Form balanced teams
+[2025-12-03 14:07:43.293] INFO  User selected: Exit Program
+[2025-12-03 14:07:43.294] INFO  Logger shutting down
+[2025-12-03 14:08:41.572] INFO  Logger initialized
+[2025-12-03 14:08:41.572] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 14:08:41.589] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-03 14:08:44.448] INFO  User selected: Exit Program
+[2025-12-03 14:08:44.448] INFO  Logger shutting down
+[2025-12-03 16:31:30.723] INFO  Logger initialized
+[2025-12-03 16:31:30.723] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 16:31:30.755] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-03 16:35:03.666] INFO  User selected: Add new club member
+[2025-12-03 16:58:30.031] INFO  Appended participant P101 to data/participants_sample.csv
+[2025-12-03 16:58:30.042] INFO  New member added: P101 | Participant_101 | Badminton | Skill: 8
+[2025-12-03 17:00:22.045] INFO  User selected: Form balanced teams
+[2025-12-03 17:12:13.692] INFO  Personality check: Leaders 35/5, Thinkers 33/10, Balanced 33/10
+[2025-12-03 17:12:13.754] INFO  Starting team formation: 101 participants, 5 teams of size 5
+[2025-12-03 17:12:13.797] INFO  Team formation completed: 5 teams created with 25 participants
+[2025-12-03 17:12:13.797] INFO  ========== DETAILED TEAM STATISTICS ==========
+[2025-12-03 17:12:13.798] INFO  Team 1: Size=5, AvgSkill=7.40
+[2025-12-03 17:12:13.798] INFO    Games: {Chess=1, DOTA 2=1, Basketball=1, Valorant=1, FIFA=1}
+[2025-12-03 17:12:13.798] INFO    Roles: {Coordinator=1, Defender=1, Supporter=1, Strategist=1, Attacker=1}
+[2025-12-03 17:12:13.798] INFO    Personalities: {Thinker=2, Leader=1, Balanced=2}
+[2025-12-03 17:12:13.799] INFO  Team 2: Size=5, AvgSkill=7.00
+[2025-12-03 17:12:13.799] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, Basketball=1, FIFA=1}
+[2025-12-03 17:12:13.799] INFO    Roles: {Coordinator=1, Defender=1, Strategist=2, Attacker=1}
+[2025-12-03 17:12:13.799] INFO    Personalities: {Thinker=2, Leader=1, Balanced=2}
+[2025-12-03 17:12:13.799] INFO  Team 3: Size=5, AvgSkill=4.20
+[2025-12-03 17:12:13.799] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, Basketball=1, Valorant=1}
+[2025-12-03 17:12:13.799] INFO    Roles: {Coordinator=1, Defender=1, Supporter=1, Strategist=1, Attacker=1}
+[2025-12-03 17:12:13.799] INFO    Personalities: {Thinker=2, Leader=1, Balanced=2}
+[2025-12-03 17:12:13.799] INFO  Team 4: Size=5, AvgSkill=5.80
+[2025-12-03 17:12:13.799] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, FIFA=2}
+[2025-12-03 17:12:13.799] INFO    Roles: {Coordinator=1, Defender=1, Supporter=1, Strategist=1, Attacker=1}
+[2025-12-03 17:12:13.799] INFO    Personalities: {Thinker=2, Leader=1, Balanced=2}
+[2025-12-03 17:12:13.799] INFO  Team 5: Size=5, AvgSkill=5.00
+[2025-12-03 17:12:13.800] INFO    Games: {Chess=1, CS:GO=1, Basketball=1, Valorant=1, FIFA=1}
+[2025-12-03 17:12:13.800] INFO    Roles: {Coordinator=1, Defender=1, Supporter=1, Strategist=1, Attacker=1}
+[2025-12-03 17:12:13.800] INFO    Personalities: {Thinker=2, Leader=1, Balanced=2}
+[2025-12-03 17:12:13.800] INFO  =============================================
+[2025-12-03 17:12:13.801] INFO  Teams formed: 5 teams, 25 participants used, 76 remaining
+[2025-12-03 17:12:13.804] INFO  Exported 5 teams to formed_teams.csv
+[2025-12-03 17:14:09.449] INFO  User selected: Form balanced teams
+[2025-12-03 17:14:18.334] INFO  Team formation cancelled: Insufficient participants
+[2025-12-03 17:16:17.985] INFO  User selected: Form balanced teams
+[2025-12-03 17:16:38.434] INFO  Personality check: Leaders 35/2, Thinkers 33/4, Balanced 33/54
+[2025-12-03 17:16:38.435] INFO  Team formation cancelled: Insufficient personality distribution 
+
+[2025-12-03 17:20:33.847] INFO  User selected: Exit Program
+[2025-12-03 17:20:33.848] INFO  Logger shutting down
+[2025-12-03 17:54:54.444] INFO  Logger initialized
+[2025-12-03 17:54:54.444] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 17:54:54.467] INFO  Loaded 101 participants from data/participants_sample.csv
+[2025-12-03 17:55:08.263] INFO  User selected: Exit Program
+[2025-12-03 17:55:08.263] INFO  Logger shutting down
