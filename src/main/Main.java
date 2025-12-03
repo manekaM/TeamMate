@@ -82,10 +82,18 @@ public class Main {
             System.out.println(" ===INSUFFICIENT MEMBERS!===\n");
             System.out.printf("You need: %d participants (%d teams × %d members)%n", totalNeeded, numberOfTeams, teamSize);
             System.out.printf("Available: %d participants%n", participants.size());
-            System.out.println("\nPlease add more members or reduce the number teams.");
+            System.out.println("\nPlease add more members or reduce the number of teams.");
             System.out.println("Returning to main menu...\n");
             logger.info("Team formation cancelled: Insufficient participants");
-            return; // Return to main menu
+            return;
+        }
+
+        //Check if we have enough of each personality type
+        if (!checkPersonalityAvailability(numberOfTeams, teamSize)) {
+            System.out.println("Cannot create " + numberOfTeams + " balanced teams.");
+            System.out.println("\nReturning to main menu...\n");
+            logger.info("Team formation cancelled: Insufficient personality distribution \n");
+            return;
         }
 
         try {
@@ -99,7 +107,6 @@ public class Main {
             System.out.println(" ===TEAM FORMATION COMPLETE!===\n");
             System.out.printf("Created: %d teams%n", teams.size());
             System.out.printf("Total participants used: %d%n", totalUsed);
-            System.out.printf("Remaining participants: %d%n", remainingParticipants);
 
             if (remainingParticipants > 0) {
                 System.out.println("\nNote: " + remainingParticipants + " members are remaining without teams.\n");
@@ -119,6 +126,52 @@ public class Main {
             System.err.println("Error during team formation: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static boolean checkPersonalityAvailability(int numberOfTeams, int teamSize) {
+        // Count how many of each personality type we have
+        int leaderCount = 0;
+        int thinkerCount = 0;
+        int balancedCount = 0;
+
+        for (Participant p : participants) {
+            PersonalityType type = p.getPersonalityType();
+            if (type == PersonalityType.LEADER) {
+                leaderCount++;
+            } else if (type == PersonalityType.THINKER) {
+                thinkerCount++;
+            } else if (type == PersonalityType.BALANCED) {
+                balancedCount++;
+            }
+        }
+
+        // Calculate what we need for balanced teams
+        int leadersNeeded = numberOfTeams;
+
+        // 1-2 thinkers per team
+        int thinkersNeeded;
+        if (teamSize > 3) {
+            thinkersNeeded = numberOfTeams * 2;
+        } else {
+            thinkersNeeded = numberOfTeams;
+        }
+
+        // For balanced: fill the rest (team size - leader - thinkers)
+        int thinkersPerTeam = (teamSize > 3) ? 2 : 1;
+        int balancedPerTeam = teamSize - 1 - thinkersPerTeam;
+        int balancedNeeded = numberOfTeams * balancedPerTeam;
+
+        // Check if we have enough of each type
+        boolean hasEnoughLeaders = leaderCount >= leadersNeeded;
+        boolean hasEnoughThinkers = thinkerCount >= thinkersNeeded;
+        boolean hasEnoughBalanced = balancedCount >= balancedNeeded;
+
+        // Log the results
+        logger.info(String.format("Personality check: Leaders %d/%d, Thinkers %d/%d, Balanced %d/%d",
+                leaderCount, leadersNeeded, thinkerCount, thinkersNeeded, balancedCount, balancedNeeded));
+
+        // Return true only if we have enough of ALL personality types
+        return hasEnoughLeaders && hasEnoughThinkers && hasEnoughBalanced;
     }
 
 
@@ -202,7 +255,7 @@ public class Main {
             System.out.println("Q" + (i + 1) + ": " + questions[i]);
             total += safeReadIntBounded("Your answer (1–5): ", 5);
         }
-        return total * 4; // Scale to 0-100 range
+        return total * 4;
     }
 
     // Safe Input Methods to prevent invalid inputs from user

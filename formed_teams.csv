@@ -1,36 +1,26 @@
 TeamNumber,ParticipantID,Name,Game,Role,Personality,Skill
-Team 1,P046,Participant_46,CS:GO,Strategist,Leader,5
-Team 1,P007,Participant_7,DOTA 2,Attacker,Leader,5
-Team 1,P034,Participant_34,FIFA,Supporter,Leader,7
-Team 1,P064,Participant_64,CS:GO,Supporter,Leader,6
-Team 1,P037,Participant_37,DOTA 2,Attacker,Leader,8
-Team 1,P043,Participant_43,DOTA 2,Defender,Leader,2
-Team 1,P070,Participant_70,Basketball,Coordinator,Leader,1
-Team 2,P079,Participant_79,Chess,Supporter,Leader,5
-Team 2,P049,Participant_49,Basketball,Supporter,Leader,3
-Team 2,P052,Participant_52,FIFA,Attacker,Leader,2
-Team 2,P067,Participant_67,Basketball,Attacker,Leader,1
-Team 2,P001,Participant_1,Chess,Strategist,Leader,2
-Team 2,P058,Participant_58,Valorant,Defender,Leader,3
-Team 2,P055,Participant_55,Chess,Coordinator,Leader,8
-Team 3,P100,Participant_100,CS:GO,Coordinator,Leader,7
-Team 3,P073,Participant_73,DOTA 2,Defender,Leader,8
-Team 3,P040,Participant_40,Chess,Coordinator,Leader,9
-Team 3,P082,Participant_82,Valorant,Attacker,Leader,10
-Team 3,P019,Participant_19,FIFA,Supporter,Leader,9
-Team 3,P016,Participant_16,CS:GO,Strategist,Leader,6
-Team 3,P061,Participant_61,CS:GO,Strategist,Leader,7
-Team 4,P028,Participant_28,CS:GO,Defender,Leader,8
-Team 4,P094,Participant_94,CS:GO,Supporter,Leader,2
-Team 4,P013,Participant_13,DOTA 2,Defender,Leader,4
-Team 4,P088,Participant_88,FIFA,Defender,Leader,4
-Team 4,P004,Participant_4,Basketball,Supporter,Leader,4
-Team 4,P091,Participant_91,FIFA,Strategist,Leader,10
-Team 4,P097,Participant_97,FIFA,Attacker,Leader,3
-Team 5,P076,Participant_76,FIFA,Strategist,Leader,7
-Team 5,P025,Participant_25,FIFA,Coordinator,Leader,9
-Team 5,P022,Participant_22,Chess,Attacker,Leader,9
-Team 5,P085,Participant_85,Basketball,Coordinator,Leader,10
-Team 5,P010,Participant_10,Valorant,Coordinator,Leader,5
-Team 5,P031,Participant_31,Basketball,Strategist,Leader,8
-Team 5,P093,Participant_93,CS:GO,Defender,Thinker,4
+Team 1,P100,Participant_100,CS:GO,Coordinator,Leader,7
+Team 1,P033,Participant_33,FIFA,Defender,Thinker,7
+Team 1,P045,Participant_45,Chess,Coordinator,Thinker,2
+Team 1,P062,Participant_62,Basketball,Attacker,Balanced,6
+Team 1,P059,Participant_59,DOTA 2,Supporter,Balanced,4
+Team 2,P022,Participant_22,Chess,Attacker,Leader,9
+Team 2,P087,Participant_87,Basketball,Attacker,Thinker,4
+Team 2,P054,Participant_54,Valorant,Supporter,Thinker,8
+Team 2,P098,Participant_98,CS:GO,Defender,Balanced,5
+Team 2,P065,Participant_65,DOTA 2,Coordinator,Balanced,7
+Team 3,P067,Participant_67,Basketball,Attacker,Leader,1
+Team 3,P003,Participant_3,FIFA,Defender,Thinker,4
+Team 3,P042,Participant_42,DOTA 2,Attacker,Thinker,7
+Team 3,P095,Participant_95,CS:GO,Coordinator,Balanced,2
+Team 3,P089,Participant_89,Chess,Supporter,Balanced,6
+Team 4,P010,Participant_10,Valorant,Coordinator,Leader,5
+Team 4,P099,Participant_99,Valorant,Supporter,Thinker,3
+Team 4,P018,Participant_18,FIFA,Defender,Thinker,3
+Team 4,P056,Participant_56,Basketball,Strategist,Balanced,4
+Team 4,P032,Participant_32,DOTA 2,Attacker,Balanced,2
+Team 5,P055,Participant_55,Chess,Coordinator,Leader,8
+Team 5,P051,Participant_51,FIFA,Strategist,Thinker,2
+Team 5,P048,Participant_48,Valorant,Defender,Thinker,6
+Team 5,P029,Participant_29,Basketball,Supporter,Balanced,5
+Team 5,P047,Participant_47,DOTA 2,Attacker,Balanced,10

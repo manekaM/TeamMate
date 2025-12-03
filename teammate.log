@@ -136,3 +136,36 @@
 [2025-12-03 00:17:51.561] INFO  Exported 5 teams to formed_teams.csv
 [2025-12-03 00:18:12.189] INFO  User selected: Exit Program
 [2025-12-03 00:18:12.190] INFO  Logger shutting down
+[2025-12-03 11:35:43.371] INFO  Logger initialized
+[2025-12-03 11:35:43.371] INFO  === WELCOME TO TEAMMATE ===
+[2025-12-03 11:35:43.419] INFO  Loaded 100 participants from data/participants_sample.csv
+[2025-12-03 11:35:54.830] INFO  User selected: Form balanced teams
+[2025-12-03 11:36:01.465] INFO  Personality check: Leaders 34/5, Thinkers 33/10, Balanced 33/10
+[2025-12-03 11:36:01.493] INFO  Starting team formation: 100 participants, 5 teams of size 5
+[2025-12-03 11:36:01.519] INFO  Team formation completed: 5 teams created with 25 participants
+[2025-12-03 11:36:01.519] INFO  ========== DETAILED TEAM STATISTICS ==========
+[2025-12-03 11:36:01.520] INFO  Team 1: Size=5, AvgSkill=5.20
+[2025-12-03 11:36:01.520] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, Basketball=1, FIFA=1}
+[2025-12-03 11:36:01.520] INFO    Roles: {Defender=1, Coordinator=2, Supporter=1, Attacker=1}
+[2025-12-03 11:36:01.520] INFO    Personalities: {Balanced=2, Leader=1, Thinker=2}
+[2025-12-03 11:36:01.520] INFO  Team 2: Size=5, AvgSkill=6.60
+[2025-12-03 11:36:01.521] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, Basketball=1, Valorant=1}
+[2025-12-03 11:36:01.521] INFO    Roles: {Defender=1, Supporter=1, Coordinator=1, Attacker=2}
+[2025-12-03 11:36:01.521] INFO    Personalities: {Balanced=2, Leader=1, Thinker=2}
+[2025-12-03 11:36:01.521] INFO  Team 3: Size=5, AvgSkill=4.00
+[2025-12-03 11:36:01.521] INFO    Games: {Chess=1, DOTA 2=1, CS:GO=1, Basketball=1, FIFA=1}
+[2025-12-03 11:36:01.521] INFO    Roles: {Defender=1, Coordinator=1, Supporter=1, Attacker=2}
+[2025-12-03 11:36:01.521] INFO    Personalities: {Balanced=2, Leader=1, Thinker=2}
+[2025-12-03 11:36:01.521] INFO  Team 4: Size=5, AvgSkill=3.40
+[2025-12-03 11:36:01.521] INFO    Games: {DOTA 2=1, Basketball=1, Valorant=2, FIFA=1}
+[2025-12-03 11:36:01.521] INFO    Roles: {Strategist=1, Defender=1, Coordinator=1, Supporter=1, Attacker=1}
+[2025-12-03 11:36:01.521] INFO    Personalities: {Balanced=2, Leader=1, Thinker=2}
+[2025-12-03 11:36:01.522] INFO  Team 5: Size=5, AvgSkill=6.20
+[2025-12-03 11:36:01.522] INFO    Games: {Chess=1, DOTA 2=1, Basketball=1, Valorant=1, FIFA=1}
+[2025-12-03 11:36:01.522] INFO    Roles: {Strategist=1, Defender=1, Coordinator=1, Supporter=1, Attacker=1}
+[2025-12-03 11:36:01.522] INFO    Personalities: {Balanced=2, Leader=1, Thinker=2}
+[2025-12-03 11:36:01.522] INFO  =============================================
+[2025-12-03 11:36:01.524] INFO  Teams formed: 5 teams, 25 participants used, 75 remaining
+[2025-12-03 11:36:01.528] INFO  Exported 5 teams to formed_teams.csv
+[2025-12-03 11:37:05.629] INFO  User selected: Exit Program
+[2025-12-03 11:37:05.630] INFO  Logger shutting down
